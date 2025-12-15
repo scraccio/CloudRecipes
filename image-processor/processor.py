@@ -7,6 +7,8 @@ s3 = boto3.client("s3")
 
 def main():
     bucket = os.environ["BUCKET"]
+    if not bucket:
+        raise RuntimeError("Missing BUCKET environment variable")
     key = os.environ["KEY"]
 
     print(f"processando il bucket s3://{bucket}/{key}")
