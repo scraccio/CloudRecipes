@@ -9,7 +9,7 @@ def main():
     bucket = os.environ["BUCKET"]
     key = os.environ["KEY"]
 
-    print(f"processando s3://{bucket}/{key}")
+    print(f"processando il bucket s3://{bucket}/{key}")
 
     obj = s3.get_object(Bucket=bucket, Key=key)
     image_bytes = obj["Body"].read()
