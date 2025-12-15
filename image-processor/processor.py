@@ -9,7 +9,8 @@ def main():
     bucket = os.environ["BUCKET"]
     if not bucket:
         raise RuntimeError("Missing BUCKET environment variable")
-    key = os.environ["KEY"]
+    key = os.environ.get("KEY", "test.jpg")
+
 
     print(f"processando il bucket s3://{bucket}/{key}")
 
