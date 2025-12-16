@@ -6,10 +6,10 @@ import io
 s3 = boto3.client("s3")
 
 def main():
-    bucket = os.environ["BUCKET"]
+    bucket = event["detail"]["bucket"]["name"]
     if not bucket:
         raise RuntimeError("Missing BUCKET environment variable")
-    key = os.environ.get("KEY", "test.jpg")
+    key = event["detail"]["object"]["key"]
 
 
     print(f"processando il bucket s3://{bucket}/{key}")
