@@ -1,5 +1,4 @@
 import os
-import json
 import boto3
 from PIL import Image
 import io
@@ -7,19 +6,8 @@ import io
 s3 = boto3.client("s3")
 
 def main():
-    raw_event = os.environ.get("EVENT_JSON")
-    if not raw_event:
-        print("no EVENT_JSON env var, exiting")
-        return
-
-    event = json.loads(raw_event)
-
-    bucket = event["bucket"]["name"]
-    key = event["object"]["key"]
-
-    if not key.startswith("original/"):
-        print(f"skip: non original -> {key}")
-        return
+    bucket = os.environ["BUCKET"]
+    key = os.environ["KEY"]
 
     print(f"processing s3://{bucket}/{key}")
 
@@ -33,7 +21,7 @@ def main():
     image.save(buffer, format=image.format)
     buffer.seek(0)
 
-    resized_key = key.replace("original/", "resized/", 1)
+    resized_key = f"resized/{key.split('/')[-1]}"
 
     s3.put_object(
         Bucket=bucket,
@@ -42,7 +30,7 @@ def main():
         ContentType=obj["ContentType"]
     )
 
-    print(f"saved resized -> s3://{bucket}/{resized_key}")
+    print(f"saved resized to s3://{bucket}/{resized_key}")
 
 if __name__ == "__main__":
     main()
