@@ -1,52 +1,48 @@
-import json
-import sys
 import os
+import json
 import boto3
 from PIL import Image
-from io import BytesIO
+import io
 
 s3 = boto3.client("s3")
 
 def main():
-    raw_event = sys.stdin.read()
+    raw_event = os.environ.get("EVENT_JSON")
     if not raw_event:
-        print("no event received on stdin")
+        print("no EVENT_JSON env var, exiting")
         return
 
     event = json.loads(raw_event)
 
-    bucket = event["detail"]["bucket"]["name"]
-    key = event["detail"]["object"]["key"]
-
-    print(f"received event for s3://{bucket}/{key}")
+    bucket = event["bucket"]["name"]
+    key = event["object"]["key"]
 
     if not key.startswith("original/"):
-        print("skip: not in original/")
+        print(f"skip: non original -> {key}")
         return
 
-    filename = key.split("/")[-1]
-    resized_key = f"resized/{filename}"
+    print(f"processing s3://{bucket}/{key}")
 
     obj = s3.get_object(Bucket=bucket, Key=key)
     image_bytes = obj["Body"].read()
 
-    img = Image.open(BytesIO(image_bytes))
-    img = img.convert("RGB")
+    image = Image.open(io.BytesIO(image_bytes))
+    image.thumbnail((512, 512))
 
-    img.thumbnail((1024, 1024))
-
-    buffer = BytesIO()
-    img.save(buffer, format="JPEG", quality=85)
+    buffer = io.BytesIO()
+    image.save(buffer, format=image.format)
     buffer.seek(0)
+
+    resized_key = key.replace("original/", "resized/", 1)
 
     s3.put_object(
         Bucket=bucket,
         Key=resized_key,
         Body=buffer,
-        ContentType="image/jpeg"
+        ContentType=obj["ContentType"]
     )
 
-    print(f"saved resized image to s3://{bucket}/{resized_key}")
+    print(f"saved resized -> s3://{bucket}/{resized_key}")
 
 if __name__ == "__main__":
     main()
