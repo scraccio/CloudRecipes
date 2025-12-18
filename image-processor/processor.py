@@ -4,11 +4,10 @@ from PIL import Image
 from datetime import datetime
 import io
 
-REGION = os.environ.get("AWS_REGION", "eu-north-1")
 s3 = boto3.client("s3")
 rekognition = boto3.client(
     "rekognition",
-    region_name=REGION
+    region_name="eu-west-1"
 )
 dynamodb = boto3.resource("dynamodb")
 table = dynamodb.Table("RecipeImageTags")
