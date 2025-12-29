@@ -2,13 +2,16 @@ import os
 import boto3
 from PIL import Image
 import io
+import json
 
 s3 = boto3.client("s3")
 sns = boto3.client("sns")
 
-def main():
-    bucket = os.environ["BUCKET"]
-    key = os.environ["KEY"]
+SNS_TOPIC_ARN = os.environ["SNS_TOPIC_ARN"]
+
+def lambda_handler(event, context):
+    bucket = event["bucket"]
+    key = event["key"]
 
     print(f"processing s3://{bucket}/{key}")
 
@@ -16,7 +19,6 @@ def main():
     image_bytes = obj["Body"].read()
 
     image = Image.open(io.BytesIO(image_bytes))
-
     image.thumbnail((512, 512))
 
     buffer = io.BytesIO()
@@ -28,12 +30,16 @@ def main():
         Key=key,
         Body=buffer,
         ContentType=obj["ContentType"],
-        Metadata={
-            "processed": "true"
-        }
+        Metadata={"processed": "true"}
     )
 
-    print(f"resized image overwritten at s3://{bucket}/{key}")
+    parts = key.split("/")
+
+    payload = {
+        "operation": "image_resize",
+        "status": "success",
+        "key": key
+    }
 
     if parts[0] == "recipes" and len(parts) >= 3:
         payload.update({
@@ -58,5 +64,4 @@ def main():
 
     print("sns notification sent:", payload)
 
-if __name__ == "__main__":
-    main()
+    return {"ok": True}
