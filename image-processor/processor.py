@@ -1,12 +1,9 @@
 import os
 import boto3
 from PIL import Image
-from datetime import datetime
 import io
 
 s3 = boto3.client("s3")
-dynamodb = boto3.resource("dynamodb")
-table = dynamodb.Table("RecipeImageTags")
 
 def main():
     bucket = os.environ["BUCKET"]
@@ -18,23 +15,24 @@ def main():
     image_bytes = obj["Body"].read()
 
     image = Image.open(io.BytesIO(image_bytes))
+
     image.thumbnail((512, 512))
 
     buffer = io.BytesIO()
     image.save(buffer, format=image.format)
     buffer.seek(0)
 
-    parts = key.split("/", 1)
-    resized_key = f"resized/{parts[1]}"
-
     s3.put_object(
         Bucket=bucket,
-        Key=resized_key,
+        Key=key,
         Body=buffer,
-        ContentType=obj["ContentType"]
+        ContentType=obj["ContentType"],
+        Metadata={
+            "processed": "true"
+        }
     )
 
-    print(f"uploaded resized image to s3://{bucket}/{resized_key}")
+    print(f"resized image overwritten at s3://{bucket}/{key}")
 
 if __name__ == "__main__":
     main()
