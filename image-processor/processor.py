@@ -4,6 +4,7 @@ from PIL import Image
 import io
 
 s3 = boto3.client("s3")
+sns = boto3.client("sns")
 
 def main():
     bucket = os.environ["BUCKET"]
@@ -33,6 +34,29 @@ def main():
     )
 
     print(f"resized image overwritten at s3://{bucket}/{key}")
+
+    if parts[0] == "recipes" and len(parts) >= 3:
+        payload.update({
+            "scope": "recipe",
+            "user_id": parts[1],
+            "recipe_id": parts[2]
+        })
+
+    elif parts[0] == "users" and len(parts) >= 2:
+        payload.update({
+            "scope": "user",
+            "user_id": parts[1]
+        })
+
+    else:
+        payload["scope"] = "unknown"
+
+    sns.publish(
+        TopicArn=SNS_TOPIC_ARN,
+        Message=json.dumps(payload)
+    )
+
+    print("sns notification sent:", payload)
 
 if __name__ == "__main__":
     main()
