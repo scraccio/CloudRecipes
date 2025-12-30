@@ -8,6 +8,9 @@ s3 = boto3.client("s3")
 def main():
     bucket = os.environ["BUCKET"]
     key = os.environ["KEY"]
+    topic_arn = os.environ["SNS_TOPIC_ARN"]
+
+    print(f"topic_arn: {topic_arn}")
 
     print(f"processing s3://{bucket}/{key}")
 
