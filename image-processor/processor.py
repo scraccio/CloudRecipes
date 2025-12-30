@@ -7,7 +7,7 @@ import json
 s3 = boto3.client("s3")
 sns = boto3.client("sns")
 
-SNS_TOPIC_ARN = os.environ["SNS_TOPIC_ARN"]
+SNS_TOPIC_ARN = os.environ.get("SNS_TOPIC_ARN", "")
 
 def lambda_handler(event, context):
     bucket = event["bucket"]
