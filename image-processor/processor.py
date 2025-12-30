@@ -7,6 +7,11 @@ s3 = boto3.client("s3")
 
 def main():
     bucket = os.environ["BUCKET"]
+    key = os.environ["KEY"]
+
+    print(f"processing s3://{bucket}/{key}")
+
+    obj = s3.get_object(Bucket=bucket, Key=key)
     image_bytes = obj["Body"].read()
 
     image = Image.open(io.BytesIO(image_bytes))
