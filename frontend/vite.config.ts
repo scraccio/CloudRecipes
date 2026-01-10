@@ -1,0 +1,12 @@
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+
+export default defineConfig({
+  plugins: [vue()],
+  define: {
+    global: "window",
+  },
+  optimizeDeps: {
+    include: ["buffer", "amazon-cognito-identity-js"],
+  },
+});

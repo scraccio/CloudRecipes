@@ -1,0 +1,180 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+*, input::file-selector-button {
+  font-family: 'Montserrat', sans-serif;
+  box-sizing: border-box;
+}
+
+.button {
+  border: none;
+  border-radius: 12px;
+  padding: 16px 32px;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.1s;
+}
+
+.grey-button:hover {
+  background-color: #c7c7c7;
+}
+
+.primary-cta:hover {
+  background-color: #06a15b;
+  cursor: pointer;
+}
+
+.red-button:hover {
+  background-color: #f86868;
+  cursor: pointer;
+}
+
+input::file-selector-button {
+  padding: 10px;
+  border: thin solid grey;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.small-margin-top {
+  margin-top: 10px;
+}
+
+.align-start {
+  align-items: flex-start;
+}
+
+.justify-start {
+  justify-content: flex-start;
+}
+
+.card {
+  padding: 10px;
+  border: 2px solid #057b45;
+  box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.151);
+  border-radius: 20px;
+}
+
+.box-shadow {
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.144);
+}
+
+input, textarea {
+  border: 1px solid lightgray;
+  outline: none;
+  padding: 10px;
+}
+
+textarea {
+  field-sizing: content;
+}
+
+input:focus{
+  outline: none;
+}
+
+.primary-cta {
+  background: #057b45;
+  color: #ffffff;
+}
+
+.red-text{
+  color: #d83838;
+}
+
+.red-button {
+  background: #d83838;
+  color: #ffffff;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-centered {
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-gap {
+  gap: 5px;
+}
+
+.primary-cta:hover {
+  opacity: 0.9;
+}
+
+.big-gap {
+  gap: 20px;
+}
+
+.bigger-gap {
+  gap: 50px;
+}
+
+.image-container {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.image-container > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.loader-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+}
+
+.spinner {
+  width: 42px;
+  height: 42px;
+  border: 4px solid #e6e6e6;
+  border-top: 4px solid #057b45;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
