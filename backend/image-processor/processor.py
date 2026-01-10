@@ -12,8 +12,6 @@ def main():
     key = os.environ["KEY"]
     topic_arn = os.environ["SNS_TOPIC_ARN"]
 
-    print(f"topic_arn: {topic_arn}")
-
     print(f"processing s3://{bucket}/{key}")
 
     obj = s3.get_object(Bucket=bucket, Key=key)
