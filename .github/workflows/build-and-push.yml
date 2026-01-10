@@ -3,7 +3,7 @@ name: Build and Push Image Processor
 on:
   push:
     paths:
-      - "image-processor/**"
+      - "backend/image-processor/**"
 
 jobs:
   build:
@@ -25,7 +25,7 @@ jobs:
 
       - name: Build, tag and push image
         run: |
-          cd image-processor
+          cd backend/image-processor
           docker build -t cloud-recipes-image-processor .
           docker tag cloud-recipes-image-processor:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/cloud-recipes-image-processor:latest
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/cloud-recipes-image-processor:latest
