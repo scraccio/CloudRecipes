@@ -1,6 +1,7 @@
-# Cloud Recipes
+![](logo.png)
 
 Cloud Recipes è un’applicazione web cloud-native per la gestione e condivisione di ricette, sviluppata come progetto universitario con un’architettura serverless ed event-driven su AWS.
+L’applicazione permette agli utenti di creare, visualizzare e condividere ricette di cucina, includendo funzionalità avanzate come il caricamento di immagini, la gestione dei profili utente e un sistema di recensioni con valutazione a stelle.
 L’obiettivo del progetto è mostrare l’integrazione concreta di servizi AWS (Cognito, API Gateway, Lambda, DynamoDB, S3, EventBridge, ECS Fargate, Rekognition) in un sistema reale, riproducibile e scalabile.
 
 ## Architettura
