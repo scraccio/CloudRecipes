@@ -29,7 +29,7 @@ L’obiettivo del progetto è mostrare l’integrazione concreta di servizi AWS 
 
 ## Guida alla configurazione e all'avvio
 
-1. Carica lo stack "cloudformation.yaml" su AWS e attendi il completamento dell'operazione
+1. Carica lo stack ```cloudformation.yaml``` su AWS e attendi il completamento dell'operazione
 2. Prendi nota degli output (API URL, User Pool ID, Client ID, bucket, ecc.)
 3. Configura il frontend aggiungendo un file ```.env```:
 ```
