@@ -27,7 +27,7 @@ L’obiettivo del progetto è mostrare l’integrazione concreta di servizi AWS 
 - AWS CLI configurata
 - Un dominio email valido (per Cognito)
 
-## Deploy infrastruttura (CloudFormation)
+## Guida alla configurazione e all'avvio
 
 1. Carica lo stack "cloudformation.yaml" su AWS e attendi il completamento dell'operazione
 2. Prendi nota degli output (API URL, User Pool ID, Client ID, bucket, ecc.)
